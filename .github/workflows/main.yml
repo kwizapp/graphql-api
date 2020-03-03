@@ -24,3 +24,18 @@ jobs:
       - run: npm test
         env:
           CI: 'true'
+  # build image for docker hub (kwizapp/)
+  build_docker_hub:
+    runs-on: ubuntu-latest
+    needs: test # required that this step has completed
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Build the Docker image
+        run: docker build . --tag kwizapp/nest-api:latest
+      - name: Push the Docker image to Docker Hub
+        run: docker push kwizapp/nest-api
