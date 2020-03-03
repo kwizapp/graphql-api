@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json tsconfig.build.json ./
 
-RUN set -x && npm ci --only=development
+RUN set -x && npm ci
 
 COPY . .
 
