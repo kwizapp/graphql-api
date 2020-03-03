@@ -7,9 +7,10 @@ import { MovieModule } from './movie/movie.module'
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      typePaths: ['../graphql/schema.graphql'],
+      typePaths: ['./src/**/*.graphql'],
+      // creates definitions on every start
       definitions: {
-        path: join(process.cwd(), 'src/graphql.schema.ts'),
+        path: join(process.cwd(), 'src/graphql.ts'),
       },
     }),
     // import all other modules for the application
