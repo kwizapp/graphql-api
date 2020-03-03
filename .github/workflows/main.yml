@@ -61,7 +61,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [test, build_heroku]
-    if: github.branch == 'dev' || github.branch == 'master'
+    # if: github.branch == 'dev' || github.branch == 'master'
 
     steps:
       - name: Login to Heroku
