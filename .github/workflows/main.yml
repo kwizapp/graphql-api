@@ -38,6 +38,7 @@ jobs:
       - name: Build the Docker image
         run: docker build . --tag kwizapp/nest-api:latest
       - name: Push the Docker image to Docker Hub
+        if: github.branch == 'dev' || github.branch == 'master'
         run: docker push kwizapp/nest-api
 
   build_heroku:
