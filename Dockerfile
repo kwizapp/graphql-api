@@ -1,33 +1,21 @@
-FROM node:13.8-alpine As development
+FROM node:13.8-alpine AS builder
 
-WORKDIR /usr/src/app
+# inject and install dependencies
+COPY package*.json tsconfig.build.json /app/
+WORKDIR /app
+RUN set -x && npm ci
+RUN set -x && npm run build
 
-COPY package*.json ./
+COPY . /app/
 
-# install only development dependencies
-RUN npm install --only=development
+# -------------------------------
 
-COPY . .
+FROM node:13.8-alpine
 
-# build the app to produce a /dist 
-# folder that can be run in production
-RUN npm run build
-
-FROM node:13.8-alpine as production
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-# install only production dependencies
-RUN npm install --only=production
+# switch to a non-root user
+USER 1000
 
 COPY . .
+COPY --from=builder --chown=1000:0 /app/dist ./dist
 
-# get the /dist folder produced in the previous stage
-COPY --from=development /usr/src/app/dist ./dist
-
-CMD ["node", "dist/main"]
+CMD ["node", "dist/main.js"]
