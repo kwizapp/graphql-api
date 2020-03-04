@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 
-import { Movie } from '../graphql.schema'
+import { Movie } from '../graphql'
 import movies from './movies'
 
 @Injectable()
