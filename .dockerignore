@@ -1,0 +1,11 @@
+*
+
+!src/
+!jest-e2e.json
+!package-lock.json
+!package.json
+!serve.sh
+!tsconfig.build.json
+!tsconfig.json
+
+src/graphql.ts
