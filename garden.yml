@@ -1,0 +1,18 @@
+kind: Module
+name: nest-api
+description: NestJS GraphQL API
+type: container
+services:
+  - name: nest-api
+    ports:
+      - name: http
+        containerPort: 4000
+        servicePort: 80
+    ingresses:
+      - path: /
+        port: http
+    env:
+      PORT: 4000
+tests:
+  - name: unit
+    args: [npm, run, test]
