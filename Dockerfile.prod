@@ -1,5 +1,8 @@
 # extend basic alpine image
-FROM node:13.8-alpine
+FROM node:13.8-alpine AS builder
+
+# set node to a production environment
+ENV NODE_ENV "prod"
 
 # inject and install dependencies
 WORKDIR /usr/src/app
@@ -13,6 +16,18 @@ COPY . .
 RUN set -x \
   && npm run typings:generate \
   && npm run build
+
+
+FROM node:13.8-alpine
+
+# inject and install dependencies
+WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
+RUN set -x && npm ci --only=production
+
+# inject service distribution
+COPY --from=builder --chown=1000:0 /usr/src/app/src /usr/src/app/src
+COPY --from=builder --chown=1000:0 /usr/src/app/dist /usr/src/app/dist
 
 # switch to a non-root user
 USER 1000
