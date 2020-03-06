@@ -21,6 +21,7 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: npm ci
+      - run: npm run typings:generate
       - run: npm test
         env:
           CI: 'true'
@@ -58,7 +59,7 @@ jobs:
           username: _
           password: ${{ secrets.HEROKU_API_KEY }}
       - name: Build the Docker image
-        run: docker build -f Dockerfile.prod . --cache-from kwizapp/nest-api:latest --tag registry.heroku.com/kwiz-nest-api/web
+        run: docker build -f Dockerfile.prod . --cache-from kwizapp/nest-api:latest-prod --tag registry.heroku.com/kwiz-nest-api/web
       - name: Push the Docker image to Heroku
         run: docker push registry.heroku.com/kwiz-nest-api/web
 
