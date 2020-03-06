@@ -35,8 +35,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - name: Build the Docker image
+      - name: Build the Docker image (dev)
         run: docker build . --tag kwizapp/nest-api:latest
+      - name: Build the Docker image (prod)
+        run: docker build -f Dockerfile.prod . --tag kwizapp/nest-api:latest-prod
       - name: Push the Docker image to Docker Hub
         if: github.branch == 'dev' || github.branch == 'master'
         run: docker push kwizapp/nest-api
@@ -56,7 +58,7 @@ jobs:
           username: _
           password: ${{ secrets.HEROKU_API_KEY }}
       - name: Build the Docker image
-        run: docker build . --cache-from kwizapp/nest-api:latest --tag registry.heroku.com/kwiz-nest-api/web
+        run: docker build -f Dockerfile.prod . --cache-from kwizapp/nest-api:latest --tag registry.heroku.com/kwiz-nest-api/web
       - name: Push the Docker image to Heroku
         run: docker push registry.heroku.com/kwiz-nest-api/web
 
