@@ -16,10 +16,4 @@ export class MovieService {
       return null
     }
   }
-
-  upVoteMovie(movieId: string) {
-    const movie = movies.find(m => m.id === movieId)
-    movie.votes++
-    return movie
-  }
 }

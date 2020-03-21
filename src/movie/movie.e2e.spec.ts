@@ -25,7 +25,6 @@ describe('Movie Resolver (e2e)', () => {
           movies {
             id
             name
-            votes
           }
         }
         `,
@@ -36,12 +35,10 @@ describe('Movie Resolver (e2e)', () => {
             {
               id: 'm1',
               name: 'Terminator',
-              votes: 0,
             },
             {
               id: 'm2',
               name: 'Bad Boys',
-              votes: 0,
             },
           ],
         },
@@ -57,7 +54,6 @@ describe('Movie Resolver (e2e)', () => {
           movie(index: 0) {
             id
             name
-            votes
           }
         }
         `,
@@ -67,32 +63,6 @@ describe('Movie Resolver (e2e)', () => {
           movie: {
             id: 'm1',
             name: 'Terminator',
-            votes: 0,
-          },
-        },
-      })
-  })
-
-  it('should upvote a movie', () => {
-    return request(app.getHttpServer())
-      .post('/graphql')
-      .send({
-        query: `
-        mutation {
-          upVoteMovie(movieId: "m1") {
-            id
-            name
-            votes
-          }
-        }
-        `,
-      })
-      .expect(200, {
-        data: {
-          upVoteMovie: {
-            id: 'm1',
-            name: 'Terminator',
-            votes: 1,
           },
         },
       })

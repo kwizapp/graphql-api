@@ -1,14 +1,9 @@
 type Movie {
   id: ID!
   name: String!
-  votes: Int
 }
 
 type Query {
   movies: [Movie!]!
   movie(index: Int!): Movie
-}
-
-type Mutation {
-  upVoteMovie(movieId: String!): Movie
 }

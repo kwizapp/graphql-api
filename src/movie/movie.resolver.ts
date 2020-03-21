@@ -14,9 +14,4 @@ export class MovieResolver {
   async movie(@Args('index') index: number) {
     return this.movieService.getMovieByIndex(index)
   }
-
-  @Mutation()
-  async upVoteMovie(@Args('movieId') movieId: string) {
-    return this.movieService.upVoteMovie(movieId)
-  }
 }
