@@ -3,15 +3,44 @@ import { Injectable } from '@nestjs/common'
 import { Movie } from '../graphql'
 import movies from './movies'
 
+const axios = require('axios')
+
 @Injectable()
 export class MovieService {
+  POSTER_SERVICE = process.env.POSTER_SERVICE_URL
+  METADATA_SERVICE = process.env.METADATA_SERVICE_URL
+
   getMovies(): Movie[] {
     return movies
   }
 
-  getMovieByImdbId(imdbId: string) {
-    // if there is a move with the provided imdbId, return it
-    // if there is no movie with the provided imdbId, return null
-    return movies.find(m => m.imdbId === imdbId) || null
+  async getMovieByImdbId(imdbId: string): Promise<Movie> {
+    try {
+      // get poster url
+      const posterResponse = await axios.get(
+        `${this.POSTER_SERVICE}?id=${imdbId}`,
+      )
+
+      return {
+        id: '0',
+        imdbId: imdbId,
+        title: 'empty',
+        releaseYear: 0,
+        posterPath: posterResponse.data.poster,
+      }
+    } catch (error) {
+      if (error.response) {
+        // request was made and the server responded with a status code that is not 2xx
+        throw new Error(
+          `Status: ${error.response.status}\nData: ${error.response.data}`,
+        )
+      } else if (error.req) {
+        // request was made but no response was received
+        throw new Error(`Request: ${error.response.request}`)
+      } else {
+        // something happened in setting up the request
+        throw new Error('Error!!!')
+      }
+    }
   }
 }

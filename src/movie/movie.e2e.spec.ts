@@ -56,6 +56,7 @@ describe('Movie Resolver (e2e)', () => {
       })
   })
 
+  // TODO: how to properly test this?
   it('should return a specific movie', () => {
     return request(app.getHttpServer())
       .post('/graphql')
