@@ -11,7 +11,7 @@ export class MovieResolver {
   }
 
   @Query()
-  async movie(@Args('index') index: number) {
-    return this.movieService.getMovieByIndex(index)
+  async movie(@Args('imdbId') imdbId: string) {
+    return this.movieService.getMovieByImdbId(imdbId)
   }
 }

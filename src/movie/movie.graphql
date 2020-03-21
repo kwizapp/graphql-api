@@ -1,9 +1,12 @@
 type Movie {
-  id: ID!
-  name: String!
+  id: ID! # TODO: maybe this can be removed if there is no other id
+  imdbId: String!
+  title: String!
+  releaseYear: Int!
+  posterPath: String!
 }
 
 type Query {
   movies: [Movie!]!
-  movie(index: Int!): Movie
+  movie(imdbId: String!): Movie
 }
