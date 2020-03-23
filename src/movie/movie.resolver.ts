@@ -6,11 +6,6 @@ export class MovieResolver {
   constructor(private readonly movieService: MovieService) {}
 
   @Query()
-  async movies() {
-    return this.movieService.getMovies()
-  }
-
-  @Query()
   async movie(@Args('imdbId') imdbId: string) {
     return this.movieService.getMovieByImdbId(imdbId)
   }

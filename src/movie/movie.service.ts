@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 
 import { Movie } from '../graphql'
-import movies from './movies'
 
 const axios = require('axios')
 
@@ -9,10 +8,6 @@ const axios = require('axios')
 export class MovieService {
   POSTER_SERVICE = process.env.POSTER_SERVICE_URL
   METADATA_SERVICE = process.env.METADATA_SERVICE_URL
-
-  getMovies(): Movie[] {
-    return movies
-  }
 
   async getMovieByImdbId(imdbId: string): Promise<Movie> {
     try {
