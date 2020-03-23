@@ -1,10 +1,12 @@
 import { Movie } from 'src/graphql'
 
 export const extractDataFromMetadataResponse = (response): Movie => {
+  const movie = response.data[0]
+
   return {
-    imdbId: response.data.imdb_id,
-    title: response.data.title,
-    releaseYear: parseInt(response.data.release_date.substr(0, 4)),
+    imdbId: movie.imdb_id,
+    title: movie.title,
+    releaseYear: parseInt(movie.release_date.substr(0, 4)),
     posterPath: '',
   }
 }
