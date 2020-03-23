@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'
 
-import { AppModule } from '../app.module'
+import { AppModule } from '../../app.module'
 
 describe('Movie Resolver (e2e)', () => {
   let app: INestApplication
@@ -23,24 +23,18 @@ describe('Movie Resolver (e2e)', () => {
       .send({
         query: `
         {
-          movie(imdbId: "tt0112442") {
-            id
-            imdbId
-            title
-            releaseYear
-            posterPath
-          }
+          movie(imdbId: "tt2395427") {imdbId title releaseYear posterPath}
         }
         `,
       })
       .expect(200, {
         data: {
           movie: {
-            imdbId: 'tt0112442',
-            title: 'Bad Boys',
-            releaseYear: 1995,
+            imdbId: 'tt2395427',
+            title: 'Avengers: Age of Ultron',
+            releaseYear: 2015,
             posterPath:
-              'https://m.media-amazon.com/images/M/MV5BMGE1ZTQ0ZTEtZTEwZS00NWE0LTlmMDUtMTE1ZWJiZTYzZTQ2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SY1000_CR0,0,675,1000_AL_.jpg',
+              'https://m.media-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg',
           },
         },
       })
