@@ -7,6 +7,10 @@ export class MovieResolver {
 
   @Query()
   async movie(@Args('imdbId') imdbId: string) {
-    return this.movieService.getMovieByImdbId(imdbId)
+    if (!!imdbId) {
+      return this.movieService.getMovieByImdbId(imdbId)
+    } else {
+      return this.movieService.getRandomMovie()
+    }
   }
 }
