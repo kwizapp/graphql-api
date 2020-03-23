@@ -15,17 +15,19 @@ export class MovieService {
       const metadataResponse = await axios.get(
         `${this.METADATA_SERVICE}?id=${imdbId}`,
       )
+      const metadata = this.extractDataFromMetadataResponse(metadataResponse)
 
       // get poster url
       const posterResponse = await axios.get(
         `${this.POSTER_SERVICE}?id=${imdbId}`,
       )
+      const poster = this.extractDataFromPosterResponse(posterResponse)
 
       return {
         imdbId: imdbId,
-        title: metadataResponse.data.title,
-        releaseYear: metadataResponse.data.release_date.substr(0, 4),
-        posterPath: posterResponse.data.poster,
+        title: metadata.title,
+        releaseYear: metadata.releaseYear,
+        posterPath: poster.posterPath,
       }
     } catch (error) {
       this.handleError(error)
@@ -36,20 +38,40 @@ export class MovieService {
     try {
       // get metadata
       const metadataResponse = await axios.get(`${this.METADATA_SERVICE}`)
+      const metadata = this.extractDataFromMetadataResponse(metadataResponse)
 
       // get poster url
       const posterResponse = await axios.get(
-        `${this.POSTER_SERVICE}?id=${metadataResponse.data.imdb_id}`,
+        `${this.POSTER_SERVICE}?id=${metadata.imdbId}`,
       )
+      const poster = this.extractDataFromPosterResponse(posterResponse)
 
       return {
-        imdbId: metadataResponse.data.imdb_id,
-        title: metadataResponse.data.title,
-        releaseYear: metadataResponse.data.release_date.substr(0, 4),
-        posterPath: posterResponse.data.poster,
+        imdbId: metadata.imdbId,
+        title: metadata.title,
+        releaseYear: metadata.releaseYear,
+        posterPath: poster.posterPath,
       }
     } catch (error) {
       this.handleError(error)
+    }
+  }
+
+  extractDataFromMetadataResponse(response): Movie {
+    return {
+      imdbId: response.data.imdb_id,
+      title: response.data.title,
+      releaseYear: response.data.release_date.substr(0, 4),
+      posterPath: '',
+    }
+  }
+
+  extractDataFromPosterResponse(response): Movie {
+    return {
+      imdbId: '',
+      title: '',
+      releaseYear: 0,
+      posterPath: response.data.poster,
     }
   }
 
