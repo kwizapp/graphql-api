@@ -1,4 +1,4 @@
-import { MovieService } from '../../movie/movie.service'
+import { MovieService } from '../../src/movie/movie.service'
 
 describe('MovieService', () => {
   let movieService: MovieService
