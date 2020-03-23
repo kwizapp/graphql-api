@@ -10,7 +10,6 @@ describe('MovieService', () => {
   it('should return an array of movies', async () => {
     const result = [
       {
-        id: 'm1',
         imdbId: 'tt0088247',
         title: 'Terminator',
         releaseYear: 1984,
@@ -18,7 +17,6 @@ describe('MovieService', () => {
           'https://m.media-amazon.com/images/M/MV5BYTViNzMxZjEtZGEwNy00MDNiLWIzNGQtZDY2MjQ1OWViZjFmXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,666,1000_AL_.jpg',
       },
       {
-        id: 'm2',
         imdbId: 'tt0112442',
         title: 'Bad Boys',
         releaseYear: 1995,
@@ -33,7 +31,6 @@ describe('MovieService', () => {
 
   it('should return a specific movie', async () => {
     const result = {
-      id: 'm1',
       imdbId: 'tt0088247',
       title: 'Terminator',
       releaseYear: 1984,

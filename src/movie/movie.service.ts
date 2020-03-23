@@ -27,7 +27,6 @@ export class MovieService {
       )
 
       return {
-        id: '0',
         imdbId: imdbId,
         title: metadataResponse.data.title,
         releaseYear: metadataResponse.data.release_date.substr(0, 4),

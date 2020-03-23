@@ -1,5 +1,4 @@
 type Movie {
-  id: ID! # TODO: maybe this can be removed if there is no other id
   imdbId: String!
   title: String!
   releaseYear: Int!
