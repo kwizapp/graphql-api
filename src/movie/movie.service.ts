@@ -21,11 +21,16 @@ export class MovieService {
         `${this.POSTER_SERVICE}?id=${imdbId}`,
       )
 
+      // get metadata
+      const metadataResponse = await axios.get(
+        `${this.METADATA_SERVICE}?id=${imdbId}`,
+      )
+
       return {
         id: '0',
         imdbId: imdbId,
-        title: 'empty',
-        releaseYear: 0,
+        title: metadataResponse.data.title,
+        releaseYear: metadataResponse.data.release_date.substr(0, 4),
         posterPath: posterResponse.data.poster,
       }
     } catch (error) {
