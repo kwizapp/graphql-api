@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { Movie } from '../graphql'
 import * as Utils from './movie.utils'
 
-const axios = require('axios')
+import axios from 'axios'
 
 @Injectable()
 export class MovieService {
@@ -13,7 +13,7 @@ export class MovieService {
   async getMovieByImdbId(imdbId: string): Promise<Movie> {
     try {
       // get metadata
-      const metadataUrl = `${this.METADATA_SERVICE}?id=${imdbId}`
+      const metadataUrl = `${this.METADATA_SERVICE}?imdbId=${imdbId}`
       const metadataResponse = await axios.get(metadataUrl)
       const metadata = Utils.extractDataFromMetadataResponse(metadataResponse)
 

@@ -63,7 +63,7 @@
     "moduleFileExtensions": [
       "ts",
       "js"
-    ],    
+    ],
     "transform": {
       ".+\\.(t|j)s$": "ts-jest"
     },

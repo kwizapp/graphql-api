@@ -30,6 +30,7 @@ export const handleError = error => {
     // request was made but no response was received
     throw new Error(`Request: ${error.response.request}`)
   } else {
+    console.error(error)
     // something happened in setting up the request
     throw new Error('Error!!!')
   }
