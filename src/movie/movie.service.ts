@@ -18,7 +18,7 @@ export class MovieService {
   }
 
   upVoteMovie(movieId: string) {
-    const movie = movies.find(m => m.id === movieId)
+    const movie = movies.find((m) => m.id === movieId)
     movie.votes++
     return movie
   }
