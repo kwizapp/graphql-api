@@ -34,6 +34,8 @@
     "rxjs": "6.5.4"
   },
   "devDependencies": {
+    "@kwizapp/eslint-config-js": "0.0.8",
+    "@kwizapp/prettier-config": "0.0.8",
     "@nestjs/cli": "7.0.0",
     "@nestjs/schematics": "7.0.0",
     "@nestjs/testing": "7.0.1",
