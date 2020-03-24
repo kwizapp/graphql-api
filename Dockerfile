@@ -1,9 +1,11 @@
 # extend basic alpine image
 FROM node:13.8-alpine
 
+ARG NODE_AUTH_TOKEN
+
 # inject and install dependencies
 WORKDIR /usr/src/app
-COPY package.json package-lock.json tsconfig.build.json ./
+COPY package.json package-lock.json tsconfig.build.json .npmrc ./
 RUN set -x && npm ci
 
 # inject service logic

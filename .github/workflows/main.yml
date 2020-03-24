@@ -8,10 +8,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Replace .npmrc with the CI-ready version
+        run: rm .npmrc && mv .npmrc.ci .npmrc
       - name: Use Node.js 13.x
         uses: actions/setup-node@v1
         with:
           node-version: '13.x'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@kwizapp'
       - name: Cache Node.js modules
         uses: actions/cache@v1
         with:
@@ -21,6 +25,9 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: npm run format:ci
       - run: npm run typings:generate
       - run: npm test
         env:
@@ -36,8 +43,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Replace .npmrc with the CI-ready version
+        run: rm .npmrc && mv .npmrc.ci .npmrc
       - name: Build the Docker image (prod)
-        run: docker build -f Dockerfile.prod . --tag kwizapp/nest-api:latest
+        run: docker build -f Dockerfile.prod . --tag kwizapp/nest-api:latest --build-arg NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
       - name: Push the Docker image to Docker Hub
         if: github.branch == 'dev' || github.branch == 'master'
         run: docker push kwizapp/nest-api
@@ -56,8 +65,10 @@ jobs:
           login-server: registry.heroku.com
           username: _
           password: ${{ secrets.HEROKU_API_KEY }}
+      - name: Replace .npmrc with the CI-ready version
+        run: rm .npmrc && mv .npmrc.ci .npmrc
       - name: Build the Docker image
-        run: docker build -f Dockerfile.prod . --cache-from kwizapp/nest-api:latest --tag registry.heroku.com/kwiz-nest-api/web
+        run: docker build -f Dockerfile.prod . --cache-from kwizapp/nest-api:latest --tag registry.heroku.com/kwiz-nest-api/web --build-arg NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
       - name: Push the Docker image to Heroku
         run: docker push registry.heroku.com/kwiz-nest-api/web
 
