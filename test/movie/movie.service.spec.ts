@@ -15,7 +15,9 @@ describe('MovieService', () => {
       posterPath:
         'https://m.media-amazon.com/images/M/MV5BYTViNzMxZjEtZGEwNy00MDNiLWIzNGQtZDY2MjQ1OWViZjFmXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,666,1000_AL_.jpg',
     }
-    jest.spyOn(movieService, 'getMovieByImdbId').mockImplementation(() => Promise.resolve(result))
+    jest
+      .spyOn(movieService, 'getMovieByImdbId')
+      .mockImplementation(() => Promise.resolve(result))
 
     const expected = await movieService.getMovieByImdbId('tt0088247')
 
@@ -30,7 +32,9 @@ describe('MovieService', () => {
       posterPath:
         'https://m.media-amazon.com/images/M/MV5BYTViNzMxZjEtZGEwNy00MDNiLWIzNGQtZDY2MjQ1OWViZjFmXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,666,1000_AL_.jpg',
     }
-    jest.spyOn(movieService, 'getRandomMovie').mockImplementation(() => Promise.resolve(result))
+    jest
+      .spyOn(movieService, 'getRandomMovie')
+      .mockImplementation(() => Promise.resolve(result))
 
     const expected = await movieService.getRandomMovie()
 

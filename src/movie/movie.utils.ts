@@ -20,7 +20,7 @@ export const extractDataFromPosterResponse = (response): Movie => {
   }
 }
 
-export const handleError = error => {
+export const handleError = (error) => {
   if (error.response) {
     // request was made and the server responded with a status code that is not 2xx
     throw new Error(
