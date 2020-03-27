@@ -6,7 +6,7 @@ export const extractDataFromMetadataResponse = (response): Movie => {
   return {
     imdbId: movie.imdb_id,
     title: movie.title,
-    releaseYear: parseInt(movie.release_date.substr(0, 4)),
+    releaseYear: parseInt(movie.release_year),
     posterPath: '',
   }
 }

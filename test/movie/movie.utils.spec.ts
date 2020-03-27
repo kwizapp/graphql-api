@@ -35,6 +35,7 @@ describe('MovieUtils', () => {
           video: false,
           vote_average: 7.3,
           vote_count: 6908,
+          release_year: '2015',
           date_segment: '2',
           omdb_consistent: true,
         },
