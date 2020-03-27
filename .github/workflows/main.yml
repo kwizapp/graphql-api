@@ -2,19 +2,19 @@ name: CI
 
 on: [push]
 
-services:
-  metadata:
-    image: kwizapp/metadata-service:latest
-    ports:
-      - 8004:8004
-  poster:
-    image: kwizapp/poster-service:latest
-    ports:
-      - 8001/8001
-
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    services:
+      metadata:
+        image: kwizapp/metadata-service:latest
+        ports:
+          - 8004:8004
+      poster:
+        image: kwizapp/poster-service:latest
+        ports:
+          - 8001/8001
 
     steps:
       - uses: actions/checkout@v2
