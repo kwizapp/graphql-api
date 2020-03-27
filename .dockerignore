@@ -7,5 +7,6 @@
 !serve.sh
 !tsconfig.build.json
 !tsconfig.json
+!.npmrc
 
 src/graphql.ts
