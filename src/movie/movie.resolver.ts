@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql'
+import { Resolver, Query, Args } from '@nestjs/graphql'
 import { MovieService } from './movie.service'
 
 @Resolver('Movie')
@@ -7,7 +7,7 @@ export class MovieResolver {
 
   @Query()
   async movie(@Args('imdbId') imdbId: string) {
-    if (!!imdbId) {
+    if (imdbId) {
       return this.movieService.getMovieByImdbId(imdbId)
     } else {
       return this.movieService.getRandomMovie()
