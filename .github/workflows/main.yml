@@ -2,6 +2,16 @@ name: CI
 
 on: [push]
 
+services:
+  metadata:
+    image: kwizapp/metadata-service:latest
+    ports:
+      - 8004:8004
+  poster:
+    image: kwizapp/poster-service:latest
+    ports:
+      - 8001/8001
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -31,6 +41,8 @@ jobs:
       - run: npm run typings:generate
       - run: npm test
         env:
+          METADATA_SERVICE_URL: http://localhost:8004
+          POSTER_SERVICE_URL: http://localhost:8001
           CI: 'true'
   # build image for docker hub (kwizapp/)
   build_docker_hub:
