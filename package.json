@@ -38,7 +38,7 @@
   "devDependencies": {
     "@kwizapp/eslint-config-ts": "0.0.8",
     "@kwizapp/prettier-config": "0.0.8",
-    "@nestjs/cli": "7.0.0",
+    "@nestjs/cli": "7.1.1",
     "@nestjs/schematics": "7.0.0",
     "@nestjs/testing": "7.0.1",
     "@types/express": "4.17.3",
