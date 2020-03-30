@@ -48,7 +48,7 @@ describe('MovieUtils', () => {
       releaseYear: 2015,
       posterPath: '',
     }
-    const actual: Movie = Utils.extractDataFromMetadataResponse(response)
+    const actual: Movie = Utils.extractDataFromMetadataResponse(response)[0]
 
     expect(actual).toStrictEqual(expected)
   })
