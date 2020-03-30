@@ -50,7 +50,7 @@ export class MovieService {
   }
 
   private async getPoster(imdbId: string): Promise<Movie> {
-    const posterUrl = `${this.POSTER_SERVICE}?id=${imdbId}`
+    const posterUrl = Utils.buildPosterServiceURL(imdbId)
     const posterResponse = await axios.get(posterUrl)
     return Utils.extractDataFromPosterResponse(posterResponse)
   }
@@ -60,21 +60,7 @@ export class MovieService {
     numMovies: number = 1,
     differentFrom: string = null,
   ): Promise<Movie[]> {
-    let metadataUrl = `${this.METADATA_SERVICE}`
-    if (imdbId) {
-      // get metadata of the specified movie
-      metadataUrl += `?imdbId=${imdbId}`
-    } else if (numMovies > 1) {
-      // get metadata of `numMovies` random movies
-      metadataUrl += `?numMovies=${numMovies}`
-    }
-
-    // the returned movie(s) should not include the movie with imdbId `differentFrom`
-    if (differentFrom) {
-      metadataUrl += metadataUrl.indexOf('?') === -1 ? '?' : '&'
-      metadataUrl += `differentFrom=${differentFrom}`
-    }
-
+    const metadataUrl = Utils.buildMetadataServiceURL(imdbId, numMovies, differentFrom);
     const metadataResponse = await axios.get(metadataUrl)
     return Utils.extractDataFromMetadataResponse(metadataResponse)
   }

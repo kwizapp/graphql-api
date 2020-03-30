@@ -1,5 +1,32 @@
 import { Movie } from 'src/graphql'
 
+export const buildPosterServiceURL = (imdbId: string): string => {
+  return `${process.env.POSTER_SERVICE_URL}?id=${imdbId}`
+}
+
+export const buildMetadataServiceURL = (
+  imdbId: string = null,
+  numMovies: number = 1,
+  differentFrom: string = null,
+): string => {
+  let metadataUrl = `${process.env.METADATA_SERVICE_URL}`
+  if (imdbId) {
+    // get metadata of the specified movie
+    metadataUrl += `?imdbId=${imdbId}`
+  } else if (numMovies > 1) {
+    // get metadata of `numMovies` random movies
+    metadataUrl += `?numMovies=${numMovies}`
+  }
+
+  // the returned movie(s) should not include the movie with imdbId `differentFrom`
+  if (differentFrom) {
+    metadataUrl += metadataUrl.indexOf('?') === -1 ? '?' : '&'
+    metadataUrl += `differentFrom=${differentFrom}`
+  }
+
+  return metadataUrl
+}
+
 export const extractDataFromMetadataResponse = (response): Movie[] => {
   return response.data.map((movie) => {
     return {
