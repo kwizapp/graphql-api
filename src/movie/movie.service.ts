@@ -60,7 +60,11 @@ export class MovieService {
     numMovies: number = 1,
     differentFrom: string = null,
   ): Promise<Movie[]> {
-    const metadataUrl = Utils.buildMetadataServiceURL(imdbId, numMovies, differentFrom);
+    const metadataUrl = Utils.buildMetadataServiceURL(
+      imdbId,
+      numMovies,
+      differentFrom,
+    )
     const metadataResponse = await axios.get(metadataUrl)
     return Utils.extractDataFromMetadataResponse(metadataResponse)
   }
