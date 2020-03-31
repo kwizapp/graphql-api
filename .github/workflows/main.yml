@@ -48,8 +48,8 @@ jobs:
       - run: npm run typings:generate
       - run: npm test
         env:
-          METADATA_SERVICE_URL: http://metadata:${{ job.services.metadata.ports[8004] }}
-          POSTER_SERVICE_URL: http://poster:${{ job.services.poster.ports[8001] }}
+          METADATA_SERVICE_URL: http://localhost:${{ job.services.metadata.ports[8004] }}
+          POSTER_SERVICE_URL: http://localhost:${{ job.services.poster.ports[8001] }}
           CI: "true"
   # build image for docker hub (kwizapp/)
   build_docker_hub:
