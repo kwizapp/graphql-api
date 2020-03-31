@@ -11,13 +11,17 @@ jobs:
         image: kwizapp/metadata-service:latest
         ports:
           - 8004
-        options: -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e POSTER_SERVICE_URL=http://localhost:8001 -e PORT=8004
-
+        env:
+          DATABASE_URL: $(secrets.DATABASE_URL)
+          POSTER_SERVICE_URL: http://localhost:8001
+          PORT: 8004
       poster:
         image: kwizapp/poster-service:latest
         ports:
           - 8001
-        options: -e API_KEY=${{ secrets.POSTER_API_KEY }} -e PORT=8001
+        env:
+          API_KEY: $(secrets.POSTER_API_KEY)
+          PORT: 8001
 
     steps:
       - uses: actions/checkout@v2
