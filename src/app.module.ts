@@ -18,7 +18,7 @@ import { ScoreModule } from './score/score.module'
     }),
     // import all other modules for the application
     MovieModule,
-    ScoreModule
+    ScoreModule,
   ],
 })
 export class AppModule {}
