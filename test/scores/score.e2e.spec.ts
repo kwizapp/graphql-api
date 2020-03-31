@@ -16,7 +16,7 @@ describe('Score Resolver (e2e)', () => {
     await app.init()
   })
 
-  it('should return 0 points (lose one life)', () => {
+  it.skip('should return 0 points (lose one life)', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
@@ -37,7 +37,7 @@ describe('Score Resolver (e2e)', () => {
       })
   })
 
-  it('should return 850 points', () => {
+  it.skip('should return 850 points', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
