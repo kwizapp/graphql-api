@@ -48,7 +48,6 @@ describe('MovieUtils', () => {
   })
 
   it('should extract data from metadata response', async () => {
-    console.log('url', process.env.POSTER_SERVICE_URL)
     const response = {
       status: 200,
       statusText: 'OK',
