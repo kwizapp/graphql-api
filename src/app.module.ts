@@ -1,8 +1,11 @@
+require('dotenv').config()
+
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 
 import { MovieModule } from './movie/movie.module'
+import { ScoreModule } from './score/score.module'
 
 @Module({
   imports: [
@@ -15,6 +18,7 @@ import { MovieModule } from './movie/movie.module'
     }),
     // import all other modules for the application
     MovieModule,
+    ScoreModule,
   ],
 })
 export class AppModule {}

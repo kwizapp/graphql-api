@@ -1,25 +1,58 @@
 import { Injectable } from '@nestjs/common'
 
 import { Movie } from '../graphql'
-import movies from './movies'
+import * as Utils from './movie.utils'
+
+import axios from 'axios'
 
 @Injectable()
 export class MovieService {
-  getMovies(): Movie[] {
-    return movies
-  }
+  METADATA_SERVICE = process.env.METADATA_SERVICE_URL
+  POSTER_SERVICE = process.env.POSTER_SERVICE_URL
 
-  getMovieByIndex(index: number) {
+  async getMovieByImdbId(imdbId: string): Promise<Movie> {
     try {
-      return movies[index]
-    } catch (e) {
-      return null
+      // get metadata
+      const metadataUrl = `${this.METADATA_SERVICE}?imdbId=${imdbId}`
+      const metadataResponse = await axios.get(metadataUrl)
+      const metadata = Utils.extractDataFromMetadataResponse(metadataResponse)
+
+      // get poster url
+      const posterUrl = `${this.POSTER_SERVICE}?id=${imdbId}`
+      const posterResponse = await axios.get(posterUrl)
+      const poster = Utils.extractDataFromPosterResponse(posterResponse)
+
+      return {
+        imdbId: imdbId,
+        title: metadata.title,
+        releaseYear: metadata.releaseYear,
+        posterPath: poster.posterPath,
+      }
+    } catch (error) {
+      Utils.handleError(error)
     }
   }
 
-  upVoteMovie(movieId: string) {
-    const movie = movies.find(m => m.id === movieId)
-    movie.votes++
-    return movie
+  async getRandomMovie(): Promise<Movie> {
+    try {
+      // get metadata
+      const metadataUrl = `${this.METADATA_SERVICE}`
+      const metadataResponse = await axios.get(metadataUrl)
+      const metadata = Utils.extractDataFromMetadataResponse(metadataResponse)
+
+      // get poster url
+      const posterUrl = `${this.POSTER_SERVICE}?id=${metadata.imdbId}`
+      const posterResponse = await axios.get(posterUrl)
+      const poster = Utils.extractDataFromPosterResponse(posterResponse)
+
+      return {
+        imdbId: metadata.imdbId,
+        title: metadata.title,
+        releaseYear: metadata.releaseYear,
+        posterPath: poster.posterPath,
+      }
+    } catch (error) {
+      Utils.handleError(error)
+    }
   }
 }
