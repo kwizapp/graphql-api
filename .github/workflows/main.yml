@@ -10,11 +10,18 @@ jobs:
       metadata:
         image: kwizapp/metadata-service:latest
         ports:
-          - 8004:8004
+          - 8004
+        env:
+          DATABASE_URL: $(secrets.DATABASE_URL)
+          POSTER_SERVICE_URL: http://localhost:8001
+          PORT: 8004
       poster:
         image: kwizapp/poster-service:latest
         ports:
-          - 8001:8001
+          - 8001
+        env:
+          API_KEY: $(secrets.POSTER_API_KEY)
+          PORT: 8001
 
     steps:
       - uses: actions/checkout@v2
@@ -23,9 +30,9 @@ jobs:
       - name: Use Node.js 13.x
         uses: actions/setup-node@v1
         with:
-          node-version: '13.x'
+          node-version: "13.x"
           registry-url: https://npm.pkg.github.com/
-          scope: '@kwizapp'
+          scope: "@kwizapp"
       - name: Cache Node.js modules
         uses: actions/cache@v1
         with:
@@ -41,9 +48,9 @@ jobs:
       - run: npm run typings:generate
       - run: npm test
         env:
-          METADATA_SERVICE_URL: http://localhost:8004
-          POSTER_SERVICE_URL: http://localhost:8001
-          CI: 'true'
+          METADATA_SERVICE_URL: http://localhost:${{ job.services.metadata.ports[8004] }}
+          POSTER_SERVICE_URL: http://localhost:${{ job.services.poster.ports[8001] }}
+          CI: "true"
   # build image for docker hub (kwizapp/)
   build_docker_hub:
     runs-on: ubuntu-latest
