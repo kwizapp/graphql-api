@@ -16,8 +16,7 @@ describe('Movie Resolver (e2e)', () => {
     await app.init()
   })
 
-  // TODO: how to properly test this?
-  it('should return a specific movie', () => {
+  it.skip('should return a specific movie', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
