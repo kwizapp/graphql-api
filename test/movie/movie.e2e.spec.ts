@@ -4,7 +4,7 @@ import * as request from 'supertest'
 
 import { AppModule } from '../../src/app.module'
 
-describe('Movie Resolver (e2e)', () => {
+describe.skip('Movie Resolver (e2e)', () => {
   let app: INestApplication
 
   const MOVIE = {
