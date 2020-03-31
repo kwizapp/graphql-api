@@ -29,6 +29,7 @@
     "@nestjs/graphql": "7.0.1",
     "@nestjs/platform-express": "7.0.1",
     "apollo-server-express": "2.11.0",
+    "axios": "0.19.2",
     "dotenv": "8.2.0",
     "graphql": "14.6.0",
     "graphql-tools": "4.0.7",
@@ -62,17 +63,29 @@
     "typescript": "3.8.3"
   },
   "jest": {
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.ts$",
     "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
+      "ts",
+      "js"
     ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
     "transform": {
       ".+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "collectCoverageFrom": [
+      "src/*.ts"
+    ]
   }
 }
