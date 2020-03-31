@@ -1,0 +1,7 @@
+type Query {
+  scoreTitleResponse(
+    imdbId: String!
+    selectedTitle: String!
+    remainingSeconds: Int!
+  ): Int
+}

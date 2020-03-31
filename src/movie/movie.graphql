@@ -1,14 +1,10 @@
 type Movie {
-  id: ID!
-  name: String!
-  votes: Int
+  imdbId: String!
+  title: String!
+  releaseYear: Int!
+  posterPath: String!
 }
 
 type Query {
-  movies: [Movie!]!
-  movie(index: Int!): Movie
-}
-
-type Mutation {
-  upVoteMovie(movieId: String!): Movie
+  movie(imdbId: String): Movie
 }
