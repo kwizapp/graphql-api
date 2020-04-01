@@ -92,7 +92,9 @@ describe('MovieUtils', () => {
       title: 'Avengers: Age of Ultron',
       releaseYear: 2015,
     }
-    const actual: Partial<Movie> = Utils.extractDataFromMetadataResponse(response)[0]
+    const actual: Partial<Movie> = Utils.extractDataFromMetadataResponse(
+      response,
+    )[0]
 
     expect(actual).toStrictEqual(expected)
   })
