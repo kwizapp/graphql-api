@@ -49,7 +49,7 @@ export class MovieService {
     }
   }
 
-  private async getPoster(imdbId: string): Promise<Movie> {
+  private async getPoster(imdbId: string): Promise<Partial<Movie>> {
     const posterUrl = Utils.buildPosterServiceURL(imdbId)
     const posterResponse = await axios.get(posterUrl)
     return Utils.extractDataFromPosterResponse(posterResponse)
@@ -59,7 +59,7 @@ export class MovieService {
     imdbId: string = null,
     numMovies: number = 1,
     differentFrom: string = null,
-  ): Promise<Movie[]> {
+  ): Promise<Partial<Movie[]>> {
     const metadataUrl = Utils.buildMetadataServiceURL(
       imdbId,
       numMovies,

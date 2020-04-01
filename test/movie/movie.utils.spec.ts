@@ -87,13 +87,12 @@ describe('MovieUtils', () => {
       ],
     }
 
-    const expected: Movie = {
+    const expected: Partial<Movie> = {
       imdbId: 'tt2395427',
       title: 'Avengers: Age of Ultron',
       releaseYear: 2015,
-      posterPath: '',
     }
-    const actual: Movie = Utils.extractDataFromMetadataResponse(response)[0]
+    const actual: Partial<Movie> = Utils.extractDataFromMetadataResponse(response)[0]
 
     expect(actual).toStrictEqual(expected)
   })
@@ -117,14 +116,11 @@ describe('MovieUtils', () => {
       },
     }
 
-    const expected: Movie = {
-      imdbId: '',
-      title: '',
-      releaseYear: 0,
+    const expected: Partial<Movie> = {
       posterPath:
         'https://m.media-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg',
     }
-    const actual: Movie = Utils.extractDataFromPosterResponse(response)
+    const actual: Partial<Movie> = Utils.extractDataFromPosterResponse(response)
 
     expect(actual).toStrictEqual(expected)
   })
