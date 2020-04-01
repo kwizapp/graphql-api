@@ -4,7 +4,7 @@ import * as request from 'supertest'
 
 import { AppModule } from '../../src/app.module'
 
-describe('Score Resolver (e2e)', () => {
+describe.skip('Score Resolver (e2e)', () => {
   let app: INestApplication
 
   beforeEach(async () => {
@@ -16,7 +16,7 @@ describe('Score Resolver (e2e)', () => {
     await app.init()
   })
 
-  it.skip('should return 0 points (lose one life)', () => {
+  it('should return 0 points (lose one life)', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
@@ -37,7 +37,7 @@ describe('Score Resolver (e2e)', () => {
       })
   })
 
-  it.skip('should return 850 points', () => {
+  it('should return 850 points', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({

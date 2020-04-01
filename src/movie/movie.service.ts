@@ -12,15 +12,8 @@ export class MovieService {
 
   async getMovieByImdbId(imdbId: string): Promise<Movie> {
     try {
-      // get metadata
-      const metadataUrl = `${this.METADATA_SERVICE}?imdbId=${imdbId}`
-      const metadataResponse = await axios.get(metadataUrl)
-      const metadata = Utils.extractDataFromMetadataResponse(metadataResponse)
-
-      // get poster url
-      const posterUrl = `${this.POSTER_SERVICE}?id=${imdbId}`
-      const posterResponse = await axios.get(posterUrl)
-      const poster = Utils.extractDataFromPosterResponse(posterResponse)
+      const metadata = (await this.getMetadata(imdbId))[0]
+      const poster = await this.getPoster(imdbId)
 
       return {
         imdbId: imdbId,
@@ -33,26 +26,46 @@ export class MovieService {
     }
   }
 
-  async getRandomMovie(): Promise<Movie> {
+  async getRandomMovies(
+    numMovies: number = 1,
+    differentFrom: string = null,
+  ): Promise<Movie[]> {
     try {
-      // get metadata
-      const metadataUrl = `${this.METADATA_SERVICE}`
-      const metadataResponse = await axios.get(metadataUrl)
-      const metadata = Utils.extractDataFromMetadataResponse(metadataResponse)
+      const metadata = await this.getMetadata(null, numMovies, differentFrom)
+      const posters = await Promise.all(
+        metadata.map((m) => this.getPoster(m.imdbId)),
+      )
 
-      // get poster url
-      const posterUrl = `${this.POSTER_SERVICE}?id=${metadata.imdbId}`
-      const posterResponse = await axios.get(posterUrl)
-      const poster = Utils.extractDataFromPosterResponse(posterResponse)
-
-      return {
-        imdbId: metadata.imdbId,
-        title: metadata.title,
-        releaseYear: metadata.releaseYear,
-        posterPath: poster.posterPath,
-      }
+      return metadata.map((m, i) => {
+        return {
+          imdbId: m.imdbId,
+          title: m.title,
+          releaseYear: m.releaseYear,
+          posterPath: posters[i].posterPath,
+        }
+      })
     } catch (error) {
       Utils.handleError(error)
     }
+  }
+
+  private async getPoster(imdbId: string): Promise<Movie> {
+    const posterUrl = Utils.buildPosterServiceURL(imdbId)
+    const posterResponse = await axios.get(posterUrl)
+    return Utils.extractDataFromPosterResponse(posterResponse)
+  }
+
+  private async getMetadata(
+    imdbId: string = null,
+    numMovies: number = 1,
+    differentFrom: string = null,
+  ): Promise<Movie[]> {
+    const metadataUrl = Utils.buildMetadataServiceURL(
+      imdbId,
+      numMovies,
+      differentFrom,
+    )
+    const metadataResponse = await axios.get(metadataUrl)
+    return Utils.extractDataFromMetadataResponse(metadataResponse)
   }
 }

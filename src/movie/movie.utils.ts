@@ -1,14 +1,42 @@
 import { Movie } from 'src/graphql'
 
-export const extractDataFromMetadataResponse = (response): Movie => {
-  const movie = response.data[0]
+export const buildPosterServiceURL = (imdbId: string): string => {
+  const posterURL = new URL(`${process.env.POSTER_SERVICE_URL}`)
+  posterURL.searchParams.append('id', imdbId)
+  return posterURL.href
+}
 
-  return {
-    imdbId: movie.imdb_id,
-    title: movie.title,
-    releaseYear: parseInt(movie.release_year),
-    posterPath: '',
-  }
+export const buildMetadataServiceURL = (
+  imdbId: string = null,
+  numMovies: number = 1,
+  differentFrom: string = null,
+): string => {
+  const metadataURL = new URL(`${process.env.METADATA_SERVICE_URL}`)
+
+  // get metadata of the specified movie
+  imdbId && metadataURL.searchParams.append('imdbId', imdbId)
+
+  // get metadata of `numMovies` random movies
+  !imdbId &&
+    numMovies > 1 &&
+    metadataURL.searchParams.append('numMovies', `${numMovies}`)
+
+  // the returned movie(s) should not include the movie with imdbId `differentFrom`
+  differentFrom &&
+    metadataURL.searchParams.append('differentFrom', `${differentFrom}`)
+
+  return metadataURL.href
+}
+
+export const extractDataFromMetadataResponse = (response): Movie[] => {
+  return response.data.map((movie) => {
+    return {
+      imdbId: movie.imdb_id,
+      title: movie.title,
+      releaseYear: parseInt(movie.release_year),
+      posterPath: '',
+    }
+  })
 }
 
 export const extractDataFromPosterResponse = (response): Movie => {

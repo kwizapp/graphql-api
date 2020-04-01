@@ -5,7 +5,7 @@ This API uses the metadata and poster service to provide the ionic client with m
 ## Environment Variables
 
 - create a `.env` file based on `.env.template`
-- specify the `METADATA_SERVICE_URL` and `POSTER_SERVICE_URL`
+- specify the `METADATA_SERVICE_URL` and `POSTER_SERVICE_URL` (do not add a trailing `/` if you want the tests to pass)
 
 ## Installation
 
@@ -40,16 +40,24 @@ $ npm run test:cov
 
 The `nest-api` provides the following requests to:
 
-- fetch a poster and metadata about a movie.
-- score a "poster quessing" question question
+- Fetch metadata and the poster of a random movie
+- Fetch metadata and the poster of a specific movie
+- Optionally, get n random movies different from the random/specific movie
+- Score a "poster quessing" question question
 
 All requests should be made to the `/graphql` endpoint (e.g., `http://localhost:3000/graphql`).
 
-### Fetching a specific movie
+### Fetching a specific or random movie
 
-| Parameter | Type     | Description                                                                                         |
-| :-------- | :------- | :-------------------------------------------------------------------------------------------------- |
-| `imdbId`  | `string` | IMDb ID, uniquely identifies a movie. The service will return the poster and metadata of the movie. |
+| Parameter | Type     | Description                                                                 |
+| :-------- | :------- | :-------------------------------------------------------------------------- |
+| `imdbId`  | `string` | Optionally. IMDb ID, uniquely identifies a movie.                           |
+| `num`     | `int`    | Optionally. Specifies how many additional random movies should be returned. |
+
+_Note:_
+
+- _If `imdbId` is used, a specific movie is returned. If the parameter is not added, a random movie is returned._
+- _If `randomMovies` is added but no `num` is specified, one additional random movie is returned. `randomMovies` can completely be omitted, so that no additional random moves are returned._
 
 **Example**
 
@@ -57,7 +65,10 @@ Request:
 
 ```
 query {
-  movie(imdbId: "tt1431045") {imdbId title releaseYear posterPath}
+  movie(imdbId: "tt1431045") {
+    imdbId title releaseYear posterPath
+    randomMovies(num: 3) { imdbId title releaseYear posterPath }
+  }
 }
 ```
 
@@ -70,34 +81,27 @@ Response:
       "imdbId": "tt1431045",
       "title": "Deadpool",
       "releaseYear": 2016,
-      "posterPath": "https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
-    }
-  }
-}
-```
-
-### Fetching a random movie
-
-**Example**
-
-Request:
-
-```
-query {
-  movie() {imdbId title releaseYear posterPath}
-}
-```
-
-Response:
-
-```json
-{
-  "data": {
-    "movie": {
-      "imdbId": "tt0076759",
-      "title": "Star Wars",
-      "releaseYear": 1977,
-      "posterPath": "https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
+      "posterPath": "https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+      "randomMovies": [
+        {
+          "imdbId": "tt1318514",
+          "title": "Rise of the Planet of the Apes",
+          "releaseYear": 2011,
+          "posterPath": "https://m.media-amazon.com/images/M/MV5BYzE3ZmNlZTctMDdmNy00MjMzLWFmZmYtN2M5N2YyYTQ1ZDJjXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg"
+        },
+        {
+          "imdbId": "tt0076759",
+          "title": "Star Wars",
+          "releaseYear": 1977,
+          "posterPath": "https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
+        },
+        {
+          "imdbId": "tt3896198",
+          "title": "Guardians of the Galaxy Vol. 2",
+          "releaseYear": 2017,
+          "posterPath": "https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg"
+        }
+      ]
     }
   }
 }
