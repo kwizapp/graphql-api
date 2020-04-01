@@ -9,41 +9,41 @@ describe('MovieUtils', () => {
 
   it('should build the poster service url given a specific imdb id', async () => {
     expect(Utils.buildPosterServiceURL('tt2395427')).toBe(
-      `${POSTER_SERVICE}?id=tt2395427`,
+      `${POSTER_SERVICE}/?id=tt2395427`,
     )
   })
 
   it('should build the metadata service url that returns data for a random movie (default)', async () => {
-    expect(Utils.buildMetadataServiceURL()).toBe(`${METADATA_SERVICE}`)
+    expect(Utils.buildMetadataServiceURL()).toBe(`${METADATA_SERVICE}/`)
   })
 
   it('should build the metadata service url that returns data for three random movies', async () => {
     expect(Utils.buildMetadataServiceURL(null, 2)).toBe(
-      `${METADATA_SERVICE}?numMovies=2`,
+      `${METADATA_SERVICE}/?numMovies=2`,
     )
   })
 
   it('should build the metadata service url that returns data for three random movies where a specific movie may not be included', async () => {
     expect(Utils.buildMetadataServiceURL(null, 3, 'tt3450958')).toBe(
-      `${METADATA_SERVICE}?numMovies=3&differentFrom=tt3450958`,
+      `${METADATA_SERVICE}/?numMovies=3&differentFrom=tt3450958`,
     )
   })
 
   it('should build the metadata service url that returns data for a specific movie', async () => {
     expect(Utils.buildMetadataServiceURL('tt2395427')).toBe(
-      `${METADATA_SERVICE}?imdbId=tt2395427`,
+      `${METADATA_SERVICE}/?imdbId=tt2395427`,
     )
   })
 
   it('should build the metadata service url that returns data for a specific movie (even multiple ones are requested)', async () => {
     expect(Utils.buildMetadataServiceURL('tt2395427', 4)).toBe(
-      `${METADATA_SERVICE}?imdbId=tt2395427`,
+      `${METADATA_SERVICE}/?imdbId=tt2395427`,
     )
   })
 
   it('should build the metadata service url that returns data for a specific movie (even multiple ones are requested) but not the specified one', async () => {
     expect(Utils.buildMetadataServiceURL('tt2395427', 4, 'tt3450958')).toBe(
-      `${METADATA_SERVICE}?imdbId=tt2395427&differentFrom=tt3450958`,
+      `${METADATA_SERVICE}/?imdbId=tt2395427&differentFrom=tt3450958`,
     )
   })
 

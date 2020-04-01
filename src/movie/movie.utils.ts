@@ -1,7 +1,9 @@
 import { Movie } from 'src/graphql'
 
 export const buildPosterServiceURL = (imdbId: string): string => {
-  return `${process.env.POSTER_SERVICE_URL}?id=${imdbId}`
+  const posterURL = new URL(`${process.env.POSTER_SERVICE_URL}`)
+  posterURL.searchParams.append('id', imdbId)
+  return posterURL.href
 }
 
 export const buildMetadataServiceURL = (
@@ -9,22 +11,18 @@ export const buildMetadataServiceURL = (
   numMovies: number = 1,
   differentFrom: string = null,
 ): string => {
-  let metadataUrl = `${process.env.METADATA_SERVICE_URL}`
-  if (imdbId) {
-    // get metadata of the specified movie
-    metadataUrl += `?imdbId=${imdbId}`
-  } else if (numMovies > 1) {
-    // get metadata of `numMovies` random movies
-    metadataUrl += `?numMovies=${numMovies}`
-  }
+  const metadataURL = new URL(`${process.env.METADATA_SERVICE_URL}`)
+
+  // get metadata of the specified movie
+  imdbId && metadataURL.searchParams.append('imdbId', imdbId)
+
+  // get metadata of `numMovies` random movies
+  !imdbId && numMovies > 1 && metadataURL.searchParams.append('numMovies', `${numMovies}`)
 
   // the returned movie(s) should not include the movie with imdbId `differentFrom`
-  if (differentFrom) {
-    metadataUrl += metadataUrl.indexOf('?') === -1 ? '?' : '&'
-    metadataUrl += `differentFrom=${differentFrom}`
-  }
+  differentFrom && metadataURL.searchParams.append('differentFrom', `${differentFrom}`)
 
-  return metadataUrl
+  return metadataURL.href
 }
 
 export const extractDataFromMetadataResponse = (response): Movie[] => {

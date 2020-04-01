@@ -5,7 +5,7 @@ This API uses the metadata and poster service to provide the ionic client with m
 ## Environment Variables
 
 - create a `.env` file based on `.env.template`
-- specify the `METADATA_SERVICE_URL` and `POSTER_SERVICE_URL`
+- specify the `METADATA_SERVICE_URL` and `POSTER_SERVICE_URL` (do not add a trailing `/` if you want the tests to pass)
 
 ## Installation
 
