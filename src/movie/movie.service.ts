@@ -33,7 +33,7 @@ export class MovieService {
     try {
       const metadata = await this.getMetadata(null, numMovies, differentFrom)
       const posters = await Promise.all(
-        metadata.map(async (m) => await this.getPoster(m.imdbId)),
+        metadata.map((m) => this.getPoster(m.imdbId)),
       )
 
       return metadata.map((m, i) => {
