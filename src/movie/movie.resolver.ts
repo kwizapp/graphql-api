@@ -1,6 +1,7 @@
 import { Args, Parent, ResolveField, Resolver, Query } from '@nestjs/graphql'
 import { MovieService } from './movie.service'
 import { Movie } from 'src/graphql'
+import { handleError } from './movie.utils'
 
 @Resolver('Movie')
 export class MovieResolver {
@@ -11,7 +12,10 @@ export class MovieResolver {
     if (imdbId) {
       return this.movieService.getMovieByImdbId(imdbId)
     } else {
-      return (await this.movieService.getRandomMovies())[0]
+      return this.movieService
+        .getRandomMovies()
+        .then((result) => result[0])
+        .catch((error) => handleError(error))
     }
   }
 
