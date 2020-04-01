@@ -9,7 +9,7 @@ export class MovieResolver {
   @Query()
   async movie(@Args('imdbId') imdbId: string): Promise<Movie> {
     if (imdbId) {
-      return await this.movieService.getMovieByImdbId(imdbId)
+      return this.movieService.getMovieByImdbId(imdbId)
     } else {
       return (await this.movieService.getRandomMovies())[0]
     }
@@ -20,6 +20,6 @@ export class MovieResolver {
     @Parent() movie: Movie,
     @Args('num') num: number = 1,
   ): Promise<Movie[]> {
-    return await this.movieService.getRandomMovies(num, movie.imdbId)
+    return this.movieService.getRandomMovies(num, movie.imdbId)
   }
 }
