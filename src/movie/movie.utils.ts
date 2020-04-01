@@ -17,10 +17,13 @@ export const buildMetadataServiceURL = (
   imdbId && metadataURL.searchParams.append('imdbId', imdbId)
 
   // get metadata of `numMovies` random movies
-  !imdbId && numMovies > 1 && metadataURL.searchParams.append('numMovies', `${numMovies}`)
+  !imdbId &&
+    numMovies > 1 &&
+    metadataURL.searchParams.append('numMovies', `${numMovies}`)
 
   // the returned movie(s) should not include the movie with imdbId `differentFrom`
-  differentFrom && metadataURL.searchParams.append('differentFrom', `${differentFrom}`)
+  differentFrom &&
+    metadataURL.searchParams.append('differentFrom', `${differentFrom}`)
 
   return metadataURL.href
 }
