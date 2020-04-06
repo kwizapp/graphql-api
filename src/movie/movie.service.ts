@@ -32,7 +32,12 @@ export class MovieService {
     differentReleaseYear: number = 0,
   ): Promise<Movie[]> {
     try {
-      const metadata = await this.getMetadata(null, numMovies, differentFrom, differentReleaseYear)
+      const metadata = await this.getMetadata(
+        null,
+        numMovies,
+        differentFrom,
+        differentReleaseYear,
+      )
       const posters = await Promise.all(
         metadata.map((m) => this.getPoster(m.imdbId)),
       )
@@ -66,7 +71,7 @@ export class MovieService {
       imdbId,
       numMovies,
       differentFrom,
-      differentReleaseYear
+      differentReleaseYear,
     )
     const metadataResponse = await axios.get(metadataUrl)
     return Utils.extractDataFromMetadataResponse(metadataResponse)
