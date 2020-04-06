@@ -10,6 +10,7 @@ export const buildMetadataServiceURL = (
   imdbId: string = null,
   numMovies: number = 1,
   differentFrom: string = null,
+  differentReleaseYear: number = 0
 ): string => {
   const metadataURL = new URL(`${process.env.METADATA_SERVICE_URL}`)
 
@@ -24,6 +25,10 @@ export const buildMetadataServiceURL = (
   // the returned movie(s) should not include the movie with imdbId `differentFrom`
   differentFrom &&
     metadataURL.searchParams.append('differentFrom', `${differentFrom}`)
+  
+  // the returned movie(s) should not be released in the same year as the movie with imdbId `differentFrom` 
+  differentFrom && differentReleaseYear &&
+    metadataURL.searchParams.append('notReleasedIn', `${differentReleaseYear}`)
 
   return metadataURL.href
 }

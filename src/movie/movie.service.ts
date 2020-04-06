@@ -29,9 +29,10 @@ export class MovieService {
   async getRandomMovies(
     numMovies: number = 1,
     differentFrom: string = null,
+    differentReleaseYear: number = 0,
   ): Promise<Movie[]> {
     try {
-      const metadata = await this.getMetadata(null, numMovies, differentFrom)
+      const metadata = await this.getMetadata(null, numMovies, differentFrom, differentReleaseYear)
       const posters = await Promise.all(
         metadata.map((m) => this.getPoster(m.imdbId)),
       )
@@ -59,11 +60,13 @@ export class MovieService {
     imdbId: string = null,
     numMovies: number = 1,
     differentFrom: string = null,
+    differentReleaseYear: number = 0,
   ): Promise<Partial<Movie[]>> {
     const metadataUrl = Utils.buildMetadataServiceURL(
       imdbId,
       numMovies,
       differentFrom,
+      differentReleaseYear
     )
     const metadataResponse = await axios.get(metadataUrl)
     return Utils.extractDataFromMetadataResponse(metadataResponse)
