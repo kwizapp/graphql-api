@@ -131,6 +131,43 @@ describe.skip('Movie Resolver (e2e)', () => {
         let randomMovie = movie.randomMovies[0]
         expect(randomMovie.imdbId).not.toBe(MOVIE.imdbId)
         expect(randomMovie.title).not.toBe(MOVIE.title)
+        //expect(randomMovie.releaseYear).not.toBe(MOVIE.releaseYear)
+        expect(randomMovie.posterPath).not.toBe(MOVIE.posterPath)
+
+        randomMovie = movie.randomMovies[1]
+        expect(randomMovie.imdbId).not.toBe(MOVIE.imdbId)
+        expect(randomMovie.title).not.toBe(MOVIE.title)
+        //expect(randomMovie.releaseYear).not.toBe(MOVIE.releaseYear)
+        expect(randomMovie.posterPath).not.toBe(MOVIE.posterPath)
+      })
+  })
+
+  it('should return a specific movie with two random movies not released in the same year as the specified movie', () => {
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: `
+        {
+          movie(imdbId: "tt2395427") {
+            imdbId title releaseYear posterPath
+            randomMovies(num: 2, differentReleaseYear: true) {imdbId title releaseYear posterPath}
+          }
+        }
+        `,
+      })
+      .expect(200)
+      .then((response) => {
+        const movie = response.body.data.movie
+        expect(movie.imdbId).toBe(MOVIE.imdbId)
+        expect(movie.title).toBe(MOVIE.title)
+        expect(movie.releaseYear).toBe(MOVIE.releaseYear)
+        expect(movie.posterPath).toBe(MOVIE.posterPath)
+
+        expect(movie.randomMovies.length).toBe(2)
+
+        let randomMovie = movie.randomMovies[0]
+        expect(randomMovie.imdbId).not.toBe(MOVIE.imdbId)
+        expect(randomMovie.title).not.toBe(MOVIE.title)
         expect(randomMovie.releaseYear).not.toBe(MOVIE.releaseYear)
         expect(randomMovie.posterPath).not.toBe(MOVIE.posterPath)
 
