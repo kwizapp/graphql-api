@@ -49,15 +49,18 @@ All requests should be made to the `/graphql` endpoint (e.g., `http://localhost:
 
 ### Fetching a specific or random movie
 
-| Parameter | Type     | Description                                                                 |
-| :-------- | :------- | :-------------------------------------------------------------------------- |
-| `imdbId`  | `string` | Optionally. IMDb ID, uniquely identifies a movie.                           |
-| `num`     | `int`    | Optionally. Specifies how many additional random movies should be returned. |
+| Parameter              | Type      | Default | Description                                                                                                  |
+| :--------------------- | :-------- | :------ | :----------------------------------------------------------------------------------------------------------- |
+| `imdbId`               | `string`  | `-`     | Optional. IMDb ID, uniquely identifies a movie.                                                              |
+| `randomMovies`         | `field`   | `-`     | Optional. Specifies that one or multiple additional random movie(s) should be returned.                      |
+| `num`                  | `int`     | `1`     | Optional. Specifies how many additional random movies should be returned.                                    |
+| `differentReleaseYear` | `boolean` | `false` | Optional. Specifies whether the random movie(s) should have a different release year than the specified one. |
 
 _Note:_
 
 - _If `imdbId` is used, a specific movie is returned. If the parameter is not added, a random movie is returned._
 - _If `randomMovies` is added but no `num` is specified, one additional random movie is returned. `randomMovies` can completely be omitted, so that no additional random moves are returned._
+- _If `differentReleaseYear` is added but no `imdbId` is specified, `differentReleaseYear` will not be considered._
 
 **Example**
 
@@ -67,7 +70,7 @@ Request:
 query {
   movie(imdbId: "tt1431045") {
     imdbId title releaseYear posterPath
-    randomMovies(num: 3) { imdbId title releaseYear posterPath }
+    randomMovies(num: 3, differentReleaseYear: true) { imdbId title releaseYear posterPath }
   }
 }
 ```
