@@ -29,6 +29,24 @@ describe('MovieUtils', () => {
     )
   })
 
+  it('should build the metadata service url that returns data for three random movies (no other filters like `differentFrom`)', async () => {
+    expect(Utils.buildMetadataServiceURL(null, 3, null)).toBe(
+      `${METADATA_SERVICE}/?numMovies=3`,
+    )
+  })
+
+  it('should build the metadata service url that returns data for three random movies where a specific movie may not be included and must be released in a different year', async () => {
+    expect(Utils.buildMetadataServiceURL(null, 3, 'tt3450958', 2016)).toBe(
+      `${METADATA_SERVICE}/?numMovies=3&differentFrom=tt3450958&notReleasedIn=2016`,
+    )
+  })
+
+  it('should build the metadata service url that returns data for three random movies (no other filters like `differentFrom` or `notReleasedIn`)', async () => {
+    expect(Utils.buildMetadataServiceURL(null, 3, null, 0)).toBe(
+      `${METADATA_SERVICE}/?numMovies=3`,
+    )
+  })
+
   it('should build the metadata service url that returns data for a specific movie', async () => {
     expect(Utils.buildMetadataServiceURL('tt2395427')).toBe(
       `${METADATA_SERVICE}/?imdbId=tt2395427`,

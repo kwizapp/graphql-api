@@ -23,7 +23,12 @@ export class MovieResolver {
   async randomMovies(
     @Parent() movie: Movie,
     @Args('num') num: number = 1,
+    @Args('differentReleaseYear') differentReleaseYear: boolean = false,
   ): Promise<Movie[]> {
-    return this.movieService.getRandomMovies(num, movie.imdbId)
+    return this.movieService.getRandomMovies(
+      num,
+      movie.imdbId,
+      differentReleaseYear ? movie.releaseYear : 0,
+    )
   }
 }
