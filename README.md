@@ -43,7 +43,8 @@ The `nest-api` provides the following requests to:
 - Fetch metadata and the poster of a random movie
 - Fetch metadata and the poster of a specific movie
 - Optionally, get n random movies different from the random/specific movie
-- Score a "poster quessing" question question
+- Score a "poster guessing" question
+- Score a "bonus" question
 
 All requests should be made to the `/graphql` endpoint (e.g., `http://localhost:3000/graphql`).
 
@@ -140,6 +141,40 @@ If the player scores zero points, the answer is incorrect and therefore one life
 {
   "data": {
     "scoreTitleResponse": 500
+  }
+}
+```
+
+### Get scores for a "bonus" question
+
+| Parameter             | Type       | Description                                                                           |
+| :-------------------- | :--------- | :------------------------------------------------------------------------------------ |
+| `imdbIds`             | `[string]` | IMDb IDs, uniquely identifying movies. Ordered by release year in increasing order.\* |
+| `titleQuestionScores` | `int`      | The points scored in the "poster guessing" question.                                   |
+
+\* This means that the player choses the order of the movie releases. The `imdbId`s are then sent to the API in this order. The API then checks whether they are sorted by their release years in increasing order.
+
+**Example**
+
+Request:
+
+```
+query {
+  scoreBonusResponse(
+    imdbIds: ["tt0145487", "tt0468569", "tt1431045"],
+    titleQuestionScores: 350
+  )
+}
+```
+
+Response:
+
+If the answer is correct, the points are doubled. If the answer is incorrect, no points are awarded.
+
+```json
+{
+  "data": {
+    "scoreBonusResponse": 700
   }
 }
 ```
