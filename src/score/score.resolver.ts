@@ -23,4 +23,15 @@ export class ScoreResolver {
       movie,
     )
   }
+
+  @Query()
+  async scoreBonusResponse(
+    @Args('imdbIds') imdbIds: string[],
+    @Args('titleQuestionScores') titleQuestionScores: number,
+  ): Promise<number> {
+    const movies = await Promise.all(
+      imdbIds.map((id) => this.movieService.getMovieByImdbId(id)),
+    )
+    return this.scoreService.scoreBonusResponse(movies, titleQuestionScores)
+  }
 }
