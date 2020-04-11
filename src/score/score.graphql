@@ -4,4 +4,9 @@ type Query {
     selectedTitle: String!
     remainingSeconds: Int!
   ): Int
+
+  scoreBonusResponse(
+    imdbIds: [String!]!
+    titleQuestionScores: Int!
+  ): Int
 }
