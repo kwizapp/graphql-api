@@ -20,6 +20,9 @@ export class MovieService {
         title: metadata.title,
         releaseYear: metadata.releaseYear,
         posterPath: poster.posterPath,
+        budget: metadata.budget,
+        revenue: metadata.revenue,
+        popularity: metadata.popularity,
       }
     } catch (error) {
       Utils.handleError(error)

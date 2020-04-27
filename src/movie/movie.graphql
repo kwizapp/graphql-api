@@ -3,6 +3,9 @@ type Movie {
   title: String!
   releaseYear: Int!
   posterPath: String!
+  budget: Int
+  revenue: Int
+  popularity: Float
   randomMovies(num: Int, differentReleaseYear: Boolean): [Movie!]
 }
 
