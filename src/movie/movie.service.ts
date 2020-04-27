@@ -51,6 +51,9 @@ export class MovieService {
           title: m.title,
           releaseYear: m.releaseYear,
           posterPath: posters[i].posterPath,
+          budget: m.budget,
+          revenue: m.revenue,
+          popularity: m.popularity,
         }
       })
     } catch (error) {
