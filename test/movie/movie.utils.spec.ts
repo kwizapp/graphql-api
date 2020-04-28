@@ -109,6 +109,9 @@ describe('MovieUtils', () => {
       imdbId: 'tt2395427',
       title: 'Avengers: Age of Ultron',
       releaseYear: 2015,
+      revenue: 1405403694,
+      budget: 280000000,
+      popularity: 37.37942,
     }
     const actual: Partial<Movie> = Utils.extractDataFromMetadataResponse(
       response,

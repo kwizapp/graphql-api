@@ -20,6 +20,9 @@ export class MovieService {
         title: metadata.title,
         releaseYear: metadata.releaseYear,
         posterPath: poster.posterPath,
+        budget: metadata.budget,
+        revenue: metadata.revenue,
+        popularity: metadata.popularity,
       }
     } catch (error) {
       Utils.handleError(error)
@@ -48,6 +51,9 @@ export class MovieService {
           title: m.title,
           releaseYear: m.releaseYear,
           posterPath: posters[i].posterPath,
+          budget: m.budget,
+          revenue: m.revenue,
+          popularity: m.popularity,
         }
       })
     } catch (error) {

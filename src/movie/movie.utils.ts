@@ -40,6 +40,9 @@ export const extractDataFromMetadataResponse = (response): Partial<Movie[]> => {
       imdbId: movie.imdb_id,
       title: movie.title,
       releaseYear: parseInt(movie.release_year),
+      budget: parseInt(movie.budget),
+      revenue: parseInt(movie.revenue),
+      popularity: movie.popularity,
     }
   })
 }
