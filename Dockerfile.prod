@@ -1,5 +1,5 @@
 # extend basic alpine image
-FROM node:13.8-alpine AS builder
+FROM node:14-alpine AS builder
 
 ARG NODE_AUTH_TOKEN
 
@@ -8,7 +8,8 @@ ENV NODE_ENV "prod"
 
 # inject and install dependencies
 WORKDIR /usr/src/app
-COPY package.json package-lock.json tsconfig.build.json .npmrc ./
+COPY package.json package-lock.json tsconfig.build.json ./
+COPY .npmrc.ci .npmrc
 RUN set -x && npm ci
 
 # inject service logic
@@ -20,23 +21,24 @@ RUN set -x \
   && npm run build
 
 
-FROM node:13.8-alpine
+FROM node:14-alpine
 
 # inject and install dependencies
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
+COPY .npmrc.ci .npmrc
 RUN set -x && npm ci --only=production
 
 # inject service distribution
 COPY --from=builder --chown=1000:0 /usr/src/app/src /usr/src/app/src
 COPY --from=builder --chown=1000:0 /usr/src/app/dist /usr/src/app/dist
 
-# switch to a non-root user
-USER 1000
-
 # inject the startup script
 COPY --chown=1000:0 serve.sh /serve.sh
 RUN set -x && chmod u+x /serve.sh
+
+# switch to a non-root user
+USER 1000
 
 # start the webserver on a dynamic port (as required by Heroku)
 CMD ["/serve.sh"]
