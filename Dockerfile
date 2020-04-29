@@ -36,4 +36,4 @@ RUN set -x && chmod u+x /serve.sh
 USER 1000
 
 # start the webserver on a dynamic port (as required by Heroku)
-CMD ["/serve.sh"]
+CMD "/serve.sh"
