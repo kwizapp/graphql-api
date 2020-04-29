@@ -1,37 +1,38 @@
-# extend basic alpine image
+# --- BUILDER ---
 FROM node:14-alpine AS builder
 
 ARG NODE_AUTH_TOKEN
-
-# set node to a production environment
-ENV NODE_ENV "prod"
+ENV NODE_ENV="production"
 
 # inject and install dependencies
-WORKDIR /usr/src/app
-COPY package.json package-lock.json tsconfig.build.json ./
-COPY .npmrc.ci .npmrc
+COPY package.json package-lock.json /app/
+COPY .npmrc.ci /app/.npmrc
+WORKDIR /app
 RUN set -x && npm ci
 
 # inject service logic
-COPY . .
+COPY . /app/
 
 # build the application
 RUN set -x \
   && npm run typings:generate \
   && npm run build
 
-
+# --- RUNTIME ---
 FROM node:14-alpine
 
+ENV METADATA_SERVICE_URL=
+ENV PORT=3001
+ENV POSTER_SERVICE_URL=
+
 # inject and install dependencies
-WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-COPY .npmrc.ci .npmrc
+COPY package.json package-lock.json /app/
+WORKDIR /app
 RUN set -x && npm ci --only=production
 
 # inject service distribution
-COPY --from=builder --chown=1000:0 /usr/src/app/src /usr/src/app/src
-COPY --from=builder --chown=1000:0 /usr/src/app/dist /usr/src/app/dist
+COPY --from=builder --chown=1000:0 /app/src /app/src
+COPY --from=builder --chown=1000:0 /app/dist /app/dist
 
 # inject the startup script
 COPY --chown=1000:0 serve.sh /serve.sh
