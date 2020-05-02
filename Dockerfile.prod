@@ -2,13 +2,14 @@
 FROM node:14-alpine AS builder
 
 ARG NODE_AUTH_TOKEN
-ENV NODE_ENV="production"
 
 # inject and install dependencies
 COPY package.json package-lock.json /app/
 COPY .npmrc.ci /app/.npmrc
 WORKDIR /app
 RUN set -x && npm ci
+
+ENV NODE_ENV="production"
 
 # inject service logic
 COPY . /app/
