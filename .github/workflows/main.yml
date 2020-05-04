@@ -15,18 +15,18 @@ jobs:
       metadata:
         image: kwizapp/metadata-service:latest
         ports:
-          - 8004
+          - 3003
         env:
           DATABASE_URL: $(secrets.DATABASE_URL)
-          POSTER_SERVICE_URL: http://localhost:8001
-          PORT: 8004
+          POSTER_SERVICE_URL: http://localhost:3002
+          PORT: 3003
       poster:
         image: kwizapp/poster-service:latest
         ports:
-          - 8001
+          - 3002
         env:
           API_KEY: $(secrets.POSTER_API_KEY)
-          PORT: 8001
+          PORT: 3002
 
     steps:
       - uses: actions/checkout@v2
@@ -53,8 +53,8 @@ jobs:
       - run: npm run typings:generate
       - run: npm test
         env:
-          METADATA_SERVICE_URL: http://localhost:${{ job.services.metadata.ports[8004] }}
-          POSTER_SERVICE_URL: http://localhost:${{ job.services.poster.ports[8001] }}
+          METADATA_SERVICE_URL: http://localhost:${{ job.services.metadata.ports[3003] }}
+          POSTER_SERVICE_URL: http://localhost:${{ job.services.poster.ports[3002] }}
           CI: 'true'
   # build image for docker hub (kwizapp/)
   build_docker_hub:
