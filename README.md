@@ -38,4 +38,4 @@ $ npm run test:cov
 
 ## API
 
-Please consult the [wiki](https://github.com/kwizapp/kwiz/wiki/API-Reference) for the API documentation and examples.
+Please consult the [wiki](https://github.com/kwizapp/kwiz/wiki/API-Reference#nest-api) for the API documentation and examples.
