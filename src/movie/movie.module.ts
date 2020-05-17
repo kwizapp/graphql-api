@@ -4,7 +4,7 @@ import { MovieResolver } from './movie.resolver'
 import { MovieService } from './movie.service'
 
 /**
- * The movie module using the `MovieResolver` to deal with GraphQL queries and
+ * The movie module uses the `MovieResolver` to deal with GraphQL queries and
  * the `MovieService` to query the `PosterService` and `MetadataService` to
  * provide the requested data.
  */
