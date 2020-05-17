@@ -15,7 +15,7 @@ export class MovieService {
 
   /**
    * Fetch the URL to the poster of the specified movie and some metadata.
-   * 
+   *
    * @param imdbId - The IMDb ID of the movie to fetch
    */
   async getMovieByImdbId(imdbId: string): Promise<Movie> {
@@ -40,7 +40,7 @@ export class MovieService {
   /**
    * Fetch information about `numMovies` random movies (i.e. their URL to the
    * movie poster and some metadata like the title, budget or release year.)
-   * 
+   *
    * @param numMovies - The number of random movies to fetch (default: 1).
    * @param differentFrom - An optional IMDb ID of a movie that should not
    *                        be returned.
@@ -81,7 +81,7 @@ export class MovieService {
 
   /**
    * Fetch the URL to the movie poster of the specified movie.
-   * 
+   *
    * @param imdbId - The IMDb ID of the movie to fetch the poster URL for.
    */
   private async getPoster(imdbId: string): Promise<Partial<Movie>> {
@@ -93,10 +93,10 @@ export class MovieService {
   /**
    * Fetch metadata about a specific or one/multiple random movie(s) from
    * the `MetadataService`.
-   * 
+   *
    * See `Utils.buildMetadataServiceURL` for the exact description of the
    * URL parameters.
-   * 
+   *
    * @param imdbId - The IMDb ID of the movie to fetch.
    * @param numMovies - The number of random movies to return.
    * @param differentFrom - The IMDb ID of a movie that should not be returned.
