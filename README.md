@@ -1,6 +1,12 @@
 # nest-api
 
-This API uses the metadata and poster service to provide the ionic client with movie posters and metadata.
+This API uses the metadata and poster service to provide the ionic client with movie posters and metadata through a GraphQL interface.
+
+## Repository Structure
+
+The source code can be found under `src` and the tests are located at `test`.
+
+The `src/main.ts` file is the entry point to the application and starts Nest with the main module defined at `src/app.module.ts`. Every other module is located in a dedicated folder (`src/movie` and `src/score`). Those modules (`src/*/*.module.ts`) are responsible for accpeting and answering the GraphQl queries (`src/*/*.resolver.ts`). The logic of how the requests are answered (e.g, which data is fetched from the `metadata-servie` or the `poster-service` or how many points have been scored) is implemented by the respective services (`src/*/*.service.ts`).
 
 ## Environment Variables
 
@@ -20,7 +26,7 @@ $ npm install
 $ npm run dev
 
 # production mode
-$ npm run start:prod
+$ npm run start
 ```
 
 ## Test
