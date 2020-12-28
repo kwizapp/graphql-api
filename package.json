@@ -29,7 +29,7 @@
     "@nestjs/graphql": "7.3.5",
     "@nestjs/platform-express": "7.0.13",
     "apollo-server-express": "2.13.1",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "dotenv": "8.2.0",
     "graphql": "14.6.0",
     "graphql-tools": "4.0.7",
