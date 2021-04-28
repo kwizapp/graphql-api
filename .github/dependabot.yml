@@ -1,0 +1,124 @@
+version: 2
+registries:
+  npm-registry-npm-pkg-github-com:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    username: "${{secrets.NPM_REGISTRY_NPM_PKG_GITHUB_COM_USERNAME}}"
+    password: "${{secrets.NPM_REGISTRY_NPM_PKG_GITHUB_COM_PASSWORD}}"
+
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 99
+  labels:
+  - dependencies
+  versioning-strategy: increase
+  ignore:
+  - dependency-name: apollo-server-core
+    versions:
+    - 2.19.2
+    - 2.21.0
+    - 2.21.1
+    - 2.21.2
+    - 2.22.1
+    - 2.22.2
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+  - dependency-name: "@nestjs/graphql"
+    versions:
+    - 7.10.2
+    - 7.10.3
+    - 7.9.10
+    - 7.9.11
+    - 7.9.8
+    - 7.9.9
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.22
+    - 14.14.25
+    - 14.14.28
+    - 14.14.31
+    - 14.14.32
+    - 14.14.34
+    - 14.14.35
+    - 14.14.37
+  - dependency-name: ts-loader
+    versions:
+    - 8.0.14
+    - 8.0.15
+    - 8.0.17
+    - 8.0.18
+    - 8.1.0
+  - dependency-name: "@types/jest"
+    versions:
+    - 26.0.20
+    - 26.0.21
+  - dependency-name: "@nestjs/platform-express"
+    versions:
+    - 7.6.11
+    - 7.6.12
+    - 7.6.13
+    - 7.6.14
+    - 7.6.5
+    - 7.6.7
+  - dependency-name: "@nestjs/common"
+    versions:
+    - 7.6.11
+    - 7.6.12
+    - 7.6.13
+    - 7.6.14
+    - 7.6.5
+    - 7.6.7
+  - dependency-name: "@nestjs/core"
+    versions:
+    - 7.6.11
+    - 7.6.12
+    - 7.6.13
+    - 7.6.14
+    - 7.6.5
+    - 7.6.7
+  - dependency-name: "@nestjs/schematics"
+    versions:
+    - 7.2.7
+    - 7.2.8
+    - 7.3.0
+  - dependency-name: "@nestjs/cli"
+    versions:
+    - 7.5.4
+    - 7.5.5
+    - 7.5.6
+  - dependency-name: "@nestjs/testing"
+    versions:
+    - 7.6.11
+    - 7.6.12
+    - 7.6.13
+    - 7.6.5
+    - 7.6.7
+  - dependency-name: rxjs
+    versions:
+    - 6.6.3
+    - 6.6.6
+  - dependency-name: graphql-tools
+    versions:
+    - 7.0.2
+    - 7.0.3
+  - dependency-name: supertest
+    versions:
+    - 6.1.2
+  - dependency-name: eslint-plugin-prettier
+    versions:
+    - 3.3.1
+  - dependency-name: elliptic
+    versions:
+    - 6.5.3
+  - dependency-name: typescript
+    versions:
+    - 3.9.7
+  - dependency-name: "@types/supertest"
+    versions:
+    - 2.0.10
+  registries:
+  - npm-registry-npm-pkg-github-com
